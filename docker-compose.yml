@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  api:
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      DATABASE_HOSTNAME: 'database'
+  database:
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./database/init_sqls:/docker-entrypoint-initdb.d
+      - ./database/volumes:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: 'ktor-starter'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
